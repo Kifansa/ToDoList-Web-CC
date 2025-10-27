@@ -24,8 +24,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    sh 'echo "Building image: ${IMAGE_NAME_WITH_TAG}"'
-                    sh 'docker-compose build app'
+                    sh 'echo "Building images for app and webserver...'
+                sh 'docker-compose build'
                 }
             }
         }
