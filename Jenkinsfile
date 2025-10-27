@@ -39,9 +39,9 @@ pipeline {
                     sh 'echo "Waiting for database..."'
                     sh 'sleep 15'
                     sh 'echo "Running migrations..."'
-                    sh 'docker-compose exec -T app php artisan migrate'
+                    sh 'docker-compose exec -T -w /var/www/html app php artisan migrate'
                     sh 'echo "Running Laravel tests..."'
-                    sh 'docker-compose exec -T app php artisan test'
+                    sh 'docker-compose exec -T -w /var/www/html app php artisan test'
                 }
             }
             post {
