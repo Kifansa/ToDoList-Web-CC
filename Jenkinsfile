@@ -20,12 +20,11 @@ pipeline {
             }
         }
 
-
         stage('Build Image') {
             steps {
                 script {
-                    sh 'echo "Building images for app and webserver...'
-                sh 'docker-compose build'
+                    sh 'echo "Building images for app and webserver..."'
+                    sh 'docker-compose build'
                 }
             }
         }
@@ -57,11 +56,11 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry ("https://index.docker.io/v1/", REGISTRY_CREDENTIALS) {
-                        bat 'echo "Pushing tag: ${IMAGE_NAME_WITH_TAG}"'
-                        bat 'docker push ${IMAGE_NAME_WITH_TAG}'
-                        bat 'echo "Tagging and pushing latest"'
-                        bat 'docker tag ${IMAGE_NAME_WITH_TAG} ${IMAGE_NAME}:latest'
-                        bat 'docker push ${IMAGE_NAME}:latest'
+                        sh 'echo "Pushing tag: ${IMAGE_NAME_WITH_TAG}"'
+                        sh 'docker push ${IMAGE_NAME_WITH_TAG}'
+                        sh 'echo "Tagging and pushing latest"'
+                        sh 'docker tag ${IMAGE_NAME_WITH_TAG} ${IMAGE_NAME}:latest'
+                        sh 'docker push ${IMAGE_NAME}:latest'
                     }
                 }
             }
