@@ -41,6 +41,9 @@ pipeline {
                     sh 'echo "Waiting for database..."'
                     sh 'sleep 15'
 
+                    sh 'echo "Clearing config cache..."'
+                    sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan config:clear'
+
                     sh 'echo "Running migrations..."'
                     sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan migrate'
 
