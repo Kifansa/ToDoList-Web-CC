@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-  # 1. Layanan Aplikasi (PHP-FPM)
   app:
     build:
       context: .
@@ -17,7 +16,6 @@ services:
     depends_on:
       - db
 
-  # 2. Layanan Web Server (Nginx)
   webserver:
     image: nginx:alpine
     container_name: laravel_nginx
@@ -26,14 +24,12 @@ services:
       - "8000:80"
     volumes:
       - .:/var/www/html
-      # PERUBAHAN DI SINI: Memetakan file, bukan direktori
       - ./docker-compose/nginx/default.conf:/etc/nginx/conf.d/default.conf
     networks:
       - laravel-network
     depends_on:
       - app
 
-  # 3. Layanan Database (MySQL)
   db:
     image: mysql:8.0
     container_name: todolist_db
@@ -50,12 +46,10 @@ services:
     networks:
       - laravel-network
 
-# Mendefinisikan Jaringan
 networks:
   laravel-network:
     driver: bridge
 
-# Mendefinisikan Volume untuk Database
 volumes:
   db-data:
     driver: local

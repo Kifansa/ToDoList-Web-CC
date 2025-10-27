@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aplikasi Daftar Tugas (S2 Jenkins)</title>
+    <title>To-Do List</title>
 
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
@@ -11,7 +11,7 @@
 <body class="bg-white">
     <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm mb-4">
     <div class="container">
-            <a class="navbar-brand" href="{{ route('tasks.index') }}">S2 Jenkins App</a>
+            <a class="navbar-brand" href="{{ route('tasks.index') }}">To-Do List</a>
         </div>
     </nav>
 
@@ -41,7 +41,7 @@
     </main>
 
     <footer class="text-center text-muted mt-5">
-        <p>&copy; {{ date('Y') }} - Kelas DevOps S2</p>
+        <p>&copy; {{ date('Y') }} - Kifansa</p>
     </footer>
 </body>
 </html>

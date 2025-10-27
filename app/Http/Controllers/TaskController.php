@@ -45,8 +45,6 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
-        // Untuk CRUD sederhana, halaman 'show' sering tidak diperlukan.
-        // Kita arahkan saja ke 'edit'.
         return redirect()->route('tasks.edit', $task);
     }
 
@@ -76,14 +74,9 @@ class TaskController extends Controller
 
     public function toggleComplete(Request $request, Task $task)
     {
-        // Logika ini mengecek apakah checkbox 'completed' dikirim
-        // Jika ya, $task->completed = true
-        // Jika tidak (unchecked), $task->completed = false
         $task->completed = $request->has('completed');
         $task->save();
 
-        // redirect()->back() akan mengembalikan user ke halaman
-        // di mana mereka berada (termasuk halaman paginasi yang benar)
         return redirect()->back()->with('success', 'Status tugas berhasil diperbarui.');
     }
 
