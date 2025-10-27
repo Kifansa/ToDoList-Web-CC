@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Building image: ${IMAGE_NAME_WITH_TAG}"'
-                    sh 'docker compose build app'
+                    sh 'docker-compose build app'
                 }
             }
         }
@@ -29,19 +29,19 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Starting containers for testing..."'
-                    sh 'docker compose up -d --no-build'
+                    sh 'docker-compose up -d --no-build'
                     sh 'echo "Waiting for database..."'
                     sh 'sleep 15'
                     sh 'echo "Running migrations..."'
-                    sh 'docker compose exec -T app php artisan migrate'
+                    sh 'docker-compose exec -T app php artisan migrate'
                     sh 'echo "Running Laravel tests..."'
-                    sh 'docker compose exec -T app php artisan test'
+                    sh 'docker-compose exec -T app php artisan test'
                 }
             }
             post {
                 always {
                     sh 'echo "Stopping and removing test containers..."'
-                    sh 'docker compose down -v'
+                    sh 'docker-compose down -v'
                 }
             }
         }
