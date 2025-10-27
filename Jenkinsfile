@@ -24,7 +24,7 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Building images for app and webserver..."'
-                    sh 'docker-compose build'
+                    sh 'docker-compose -f docker-compose.ci.yaml build'
                 }
             }
         }
@@ -33,21 +33,25 @@ pipeline {
             steps {
                 script {
                     sh 'echo "Ensuring a clean environment..."'
-                    sh 'docker-compose down -v'
+                    sh 'docker-compose -f docker-compose.ci.yaml down -v'
+
                     sh 'echo "Starting containers for testing..."'
-                    sh 'docker-compose up -d --no-build'
+                    sh 'docker-compose -f docker-compose.ci.yaml up -d --no-build'
+
                     sh 'echo "Waiting for database..."'
                     sh 'sleep 15'
+
                     sh 'echo "Running migrations..."'
-                    sh 'docker-compose exec -T -w /var/www/html app php artisan migrate'
+                    sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan migrate'
+
                     sh 'echo "Running Laravel tests..."'
-                    sh 'docker-compose exec -T -w /var/www/html app php artisan test'
+                    sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan test'
                 }
             }
             post {
                 always {
                     sh 'echo "Stopping and removing test containers..."'
-                    sh 'docker-compose down -v'
+                    sh 'docker-compose -f docker-compose.ci.yaml down -v'
                 }
             }
         }

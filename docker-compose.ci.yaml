@@ -5,12 +5,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: laravel_app_local 
-    image: ${IMAGE_NAME_WITH_TAG:-kifansanaufal/todolist-web:local}
+    container_name: laravel_app_ci
+    image: ${IMAGE_NAME_WITH_TAG}
     restart: unless-stopped
     working_dir: /var/www/html
-    volumes:
-      - .:/var/www/html
     networks:
       - laravel-network
     depends_on:
@@ -20,12 +18,10 @@ services:
     build:
       context: ./docker-compose/nginx
       dockerfile: Dockerfile
-    container_name: laravel_nginx_local
+    container_name: laravel_nginx_ci
     restart: unless-stopped
     ports:
       - "8000:80"
-    volumes:
-      - .:/var/www/html
     networks:
       - laravel-network
     depends_on:
@@ -33,10 +29,8 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: laravel_db_local
+    container_name: laravel_db_ci
     restart: unless-stopped
-    ports:
-      - "3307:3306"
     environment:
       MYSQL_DATABASE: laravel_db
       MYSQL_USER: laravel_user
