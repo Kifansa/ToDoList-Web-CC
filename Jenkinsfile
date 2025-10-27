@@ -19,8 +19,8 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    bat 'echo "Building image: ${IMAGE_NAME_WITH_TAG}"'
-                    bat 'docker compose build app'
+                    sh 'echo "Building image: ${IMAGE_NAME_WITH_TAG}"'
+                    sh 'docker compose build app'
                 }
             }
         }
@@ -28,20 +28,20 @@ pipeline {
         stage('Run Integration Tests') {
             steps {
                 script {
-                    bat 'echo "Starting containers for testing..."'
-                    bat 'docker compose up -d --no-build'
-                    bat 'echo "Waiting for database..."'
-                    bat 'sleep 15'
-                    bat 'echo "Running migrations..."'
-                    bat 'docker compose exec -T app php artisan migrate'
-                    bat 'echo "Running Laravel tests..."'
-                    bat 'docker compose exec -T app php artisan test'
+                    sh 'echo "Starting containers for testing..."'
+                    sh 'docker compose up -d --no-build'
+                    sh 'echo "Waiting for database..."'
+                    sh 'sleep 15'
+                    sh 'echo "Running migrations..."'
+                    sh 'docker compose exec -T app php artisan migrate'
+                    sh 'echo "Running Laravel tests..."'
+                    sh 'docker compose exec -T app php artisan test'
                 }
             }
             post {
                 always {
-                    bat 'echo "Stopping and removing test containers..."'
-                    bat 'docker compose down -v'
+                    sh 'echo "Stopping and removing test containers..."'
+                    sh 'docker compose down -v'
                 }
             }
         }
