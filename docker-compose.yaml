@@ -6,7 +6,9 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: laravel_app
-    image: s2-laravel-app
+
+    image: ${IMAGE_NAME_WITH_TAG}
+
     restart: unless-stopped
     working_dir: /var/www/html
     volumes:
@@ -32,12 +34,12 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: todolist_db
+    container_name: laravel_db
     restart: unless-stopped
     ports:
       - "3307:3306"
     environment:
-      MYSQL_DATABASE: todolist_db
+      MYSQL_DATABASE: laravel_db
       MYSQL_USER: laravel_user
       MYSQL_PASSWORD: laravel_pass
       MYSQL_ROOT_PASSWORD: root_pass
