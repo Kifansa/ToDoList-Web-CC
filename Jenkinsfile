@@ -28,6 +28,8 @@ pipeline {
         stage('Run Integration Tests') {
             steps {
                 script {
+                    sh 'echo "Ensuring a clean environment..."'
+                    sh 'docker-compose down -v'
                     sh 'echo "Starting containers for testing..."'
                     sh 'docker-compose up -d --no-build'
                     sh 'echo "Waiting for database..."'
