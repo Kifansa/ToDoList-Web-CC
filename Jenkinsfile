@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        cleanWs()
+    }
+
     environment {
         IMAGE_NAME = 'kifansanaufal/todolist-web'
         REGISTRY_CREDENTIALS = 'dockerhub-credentials'
