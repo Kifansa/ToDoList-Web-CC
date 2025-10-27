@@ -7,6 +7,15 @@ services:
       dockerfile: Dockerfile
     container_name: laravel_app_ci
     image: ${IMAGE_NAME_WITH_TAG}
+
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: laravel_db
+      DB_USERNAME: laravel_user
+      DB_PASSWORD: laravel_pass
+
     restart: unless-stopped
     working_dir: /var/www/html
     networks:
