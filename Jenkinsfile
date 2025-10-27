@@ -48,7 +48,7 @@ pipeline {
                     sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan migrate'
 
                     sh 'echo "Running Laravel tests..."'
-                    sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app php artisan test'
+                    sh 'docker-compose -f docker-compose.ci.yaml exec -T -w /var/www/html app ./vendor/bin/phpunit'
                 }
             }
             post {
